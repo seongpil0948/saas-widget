@@ -84,7 +84,7 @@ export default {
       }
     })
     const postWidget = () => {
-      return axios.post("/insa/widget/", {
+      const data = {
         is_active: true,
         shop: data.shop.name.value,
         margin_top: data.widget.margin_top.value,
@@ -93,7 +93,9 @@ export default {
         num_of_item: data.widget.numOfElements.value,
         item_size: data.content.size.value,
         custom_item_src: data.content.src.value,
-      })
+      }
+      console.log("Request Data: ", data)
+      return axios.post("/insa/widget/", data)
     }
     const onSubmit = (e) => {
       console.log('onSubmit', e, context)

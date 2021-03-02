@@ -36,6 +36,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 docker images | grep widget-admin
 docker ps | grep widget-admin
-docker build -t widget-admin:latest
-docker run -it -p 8094:80 --rm --name widget-admin-process widget-admin:latest
+docker build . -t widget-admin:latest
 docker run -it -p 8094:80 --rm --name widget-admin-process widget-admin:latest
