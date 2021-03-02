@@ -84,7 +84,7 @@ export default {
       }
     })
     const postWidget = () => {
-      const data = {
+      const d = {
         is_active: true,
         shop: data.shop.name.value,
         margin_top: data.widget.margin_top.value,
@@ -95,7 +95,7 @@ export default {
         custom_item_src: data.content.src.value,
       }
       console.log("Request Data: ", data)
-      return axios.post("/insa/widget/", data)
+      return axios.post("http://pan.snu.ac.kr:8099/insa/widget/", d)
     }
     const onSubmit = (e) => {
       console.log('onSubmit', e, context)
