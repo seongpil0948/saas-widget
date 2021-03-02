@@ -37,11 +37,12 @@
 </template>
 <script>
 import { ref, reactive, onMounted } from 'vue'
-import axios from 'axios'
+import axios from 'axios' // FIXME: 컴포지션 에피아이 문제 있다.
+// 로직적인 부분, 믹스인 대체용 (not used plugin or Enviroment )으로만 사용 하면 좋을 것 같다.
 export default {
   setup(props, context) {
     onMounted(() => {
-      console.log("Mounted")
+      console.log("Mounted, env: ", context)
     })
 
     const formValid = ref(false)
@@ -83,11 +84,15 @@ export default {
       }
     })
     const postWidget = () => {
-      return axios.post("http://127.0.0.1:8000/resource/widget/", {
+      return axios.post("/insa/widget/", {
+        is_active: true,
         shop: data.shop.name.value,
+        margin_top: data.widget.margin_top.value,
+        margin_left: data.widget.margin_left.value,
         box_size: data.widget.size.value,
         num_of_item: data.widget.numOfElements.value,
         item_size: data.content.size.value,
+        custom_item_src: data.content.src.value,
       })
     }
     const onSubmit = (e) => {
