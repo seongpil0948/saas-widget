@@ -67,7 +67,9 @@ export default {
       t.headers.Host = `${this.shopId}.cafe24api.com`
       t.headers.Referer = `${this.shopId}.cafe24api.com`
       t.headers.Origin = `${this.shopId}.cafe24api.com`
+      t.headers['Access-Control-Allow-Origin'] = '*'
       const headers = t.headers
+      console.log("Headers: ", headers)
       t.data.code = code
       const formData = new URLSearchParams();
 
