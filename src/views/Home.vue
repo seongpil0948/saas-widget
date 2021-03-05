@@ -41,14 +41,17 @@ export default {
     }
   },
   mounted() {
+    const paramOfUrl = window.location.search
+    const param = new URLSearchParams(paramOfUrl)
     console.log(
       "$route.params: ", this.$route.params,
+      "Window Location Search", paramOfUrl,
+      "URLSearchParams", param,
     )
-    const inboundParams = this.$route.params
-    if (!inboundParams.code) {
+    if (!param.has('code')) {
       this.get_code()
     } else {
-      this.get_token({ code: inboundParams.code })
+      this.get_token({ code: param.get('code') })
         .then((res) => console.log("Get Token Response: ", res))
     }
   },
