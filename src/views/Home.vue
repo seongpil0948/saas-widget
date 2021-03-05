@@ -64,6 +64,9 @@ export default {
     get_token({ code }) {
       const url = 'https://tjagksro.cafe24api.com/api/v2/oauth/token'
       const t = this.authToken
+      t.headers.Host = `${shopId}.cafe24api.com`
+      t.headers.Referer = `${shopId}.cafe24api.com`
+      t.headers.Origin = `${shopId}.cafe24api.com`
       const headers = t.headers
       t.data.code = code
       const formData = new URLSearchParams();
