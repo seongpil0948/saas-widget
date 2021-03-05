@@ -40,7 +40,7 @@ export default {
   },
   mounted() {
     console.log(
-      "$route.params: ", $route.params,
+      "$route.params: ", this.$route.params,
     )
     const inboundParams = this.$route.params
     if (!inboundParams.code) {
@@ -59,7 +59,7 @@ export default {
       const t = this.authToken
       const headers = t.headers
       t.data.code = code
-      return this.axios.post(url, data = t.data, { headers })
+      return this.axios.post(url, t.data, { headers })
     }
   }
 };
