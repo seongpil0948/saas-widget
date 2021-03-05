@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <w-button class="text-right mt6" @click="get_code">코드 요청</w-button>
-    <w-button class="text-center mt6" @click="get_token($route.params.code)">토큰 요청</w-button>
+    <w-button class="text-center mt6" @click="get_token(updateParam().get('code'))">토큰 요청</w-button>
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         data: {
-          grant_type: 'authorization_code',
+          grant_type: "authorization_code",
           code: null, // fill as authCode
           redirect_uri: 'https://widget-admin.netlify.app/'
         }
@@ -41,11 +41,9 @@ export default {
     }
   },
   mounted() {
-    const paramOfUrl = window.location.search
-    const param = new URLSearchParams(paramOfUrl)
+    const param = this.updateParam()
     console.log(
       "$route.params: ", this.$route.params,
-      "Window Location Search", paramOfUrl,
       "URLSearchParams", param,
     )
     if (!param.has('code')) {
@@ -56,6 +54,10 @@ export default {
     }
   },
   methods: {
+    updateParam() {
+      const paramOfUrl = window.location.search
+      return new URLSearchParams(paramOfUrl)
+    },
     get_code() {
       window.location.href = `https://${this.shopId}.cafe24api.com/api/v2/oauth/authorize?response_type=code&client_id=f31zyAgabCWXPLDAqtLYdD&state=TEMP_CSRF_TOKEN&redirect_uri=https://widget-admin.netlify.app/&scope=mall.read_application,mall.write_application`
     },
@@ -64,7 +66,13 @@ export default {
       const t = this.authToken
       const headers = t.headers
       t.data.code = code
-      return this.axios.post(url, t.data, { headers })
+      const formData = new URLSearchParams();
+
+      for (const [key, value] of Object.entries(t.data)) {
+        formData.append(key, value)
+      }
+
+      return this.axios.post(url, formData, { headers })
     }
   }
 };
