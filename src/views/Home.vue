@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
+    <w-button class="text-right mt6" @click="get_code">코드 요청</w-button>
+    <w-button class="text-center mt6" @click="get_token($route.params.code)">토큰 요청</w-button>
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
