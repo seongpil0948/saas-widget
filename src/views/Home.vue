@@ -14,8 +14,53 @@ export default {
   components: {
     HelloWorld
   },
+  data() {
+    return {
+      shopId: 'tjagksro',
+      authCodeParams: {
+        response_type: 'code',
+        client_id: 'f31zyAgabCWXPLDAqtLYdD',
+        state: 'TEMP_CSRF_TOKEN',
+        redirect_uri: 'https://widget-admin.netlify.app/',
+        scope: 'mall.read_application,mall.write_application',
+      },
+      authToken: {
+        headers: {
+          // Basic {base64_encode({client_id}:{client_Secret})}   From Cafe24 Develope Account'
+          Authorization: 'Basic ZjMxenlBZ2FiQ1dYUExEQXF0TFlkRDoyOWVCb01zZW9rS3ZPQWxoMWpXcVFN',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: {
+          grant_type: 'authorization_code',
+          code: null, // fill as authCode
+          redirect_uri: 'https://widget-admin.netlify.app/'
+        }
+      }
+    }
+  },
   mounted() {
-    console.log(process.env)
+    console.log(
+      "$route.params: ", $route.params,
+    )
+    const inboundParams = this.$route.params
+    if (!inboundParams.code) {
+      this.get_code()
+    } else {
+      this.get_token({ code: inboundParams.code })
+        .then((res) => console.log("Get Token Response: ", res))
+    }
+  },
+  methods: {
+    get_code() {
+      window.location.href = `https://${this.shopId}.cafe24api.com/api/v2/oauth/authorize?response_type=code&client_id=f31zyAgabCWXPLDAqtLYdD&state=TEMP_CSRF_TOKEN&redirect_uri=https://widget-admin.netlify.app/&scope=mall.read_application,mall.write_application`
+    },
+    get_token({ code }) {
+      const url = 'https://tjagksro.cafe24api.com/api/v2/oauth/token'
+      const t = this.authToken
+      const headers = t.headers
+      t.data.code = code
+      return this.axios.post(url, data = t.data, { headers })
+    }
   }
 };
 </script>
