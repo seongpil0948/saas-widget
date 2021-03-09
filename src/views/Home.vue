@@ -75,6 +75,7 @@ export default {
       const url = 'https://tjagksro.cafe24api.com/api/v2/oauth/token'
       const t = this.authToken
       t.data.code = code
+      const headers = t.headers
       const formData = new URLSearchParams();
 
       for (const [key, value] of Object.entries(t.data)) {
