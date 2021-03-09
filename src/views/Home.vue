@@ -30,7 +30,7 @@ export default {
           mall.write_application,
           mall.read_category,
           mall.read_product,
-          mall.write_product
+          mall.write_product,
           mall.read_personal
         `,
       },
@@ -90,7 +90,6 @@ export default {
         crossDomain: true,
       })
     },
-    token_refresh ()
   }
 };
 </script>
