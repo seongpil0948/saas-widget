@@ -24,7 +24,15 @@ export default {
         client_id: 'f31zyAgabCWXPLDAqtLYdD',
         state: 'TEMP_CSRF_TOKEN',
         redirect_uri: 'https://widget-admin.netlify.app/',
-        scope: 'mall.read_application,mall.write_application',
+        // Syncronize With: https://developers.cafe24.com/admin/apps/front/detail?client_id=f31zyAgabCWXPLDAqtLYdD
+        scope: `
+          mall.read_application, 
+          mall.write_application,
+          mall.read_category,
+          mall.read_product,
+          mall.write_product
+          mall.read_personal
+        `,
       },
       authToken: {
         headers: {
