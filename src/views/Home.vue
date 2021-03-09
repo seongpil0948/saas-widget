@@ -25,14 +25,7 @@ export default {
         state: 'TEMP_CSRF_TOKEN',
         redirect_uri: 'https://widget-admin.netlify.app/',
         // Syncronize With: https://developers.cafe24.com/admin/apps/front/detail?client_id=f31zyAgabCWXPLDAqtLYdD
-        scope: `
-          mall.read_application, 
-          mall.write_application,
-          mall.read_category,
-          mall.read_product,
-          mall.write_product,
-          mall.read_personal
-        `,
+        scope: 'mall.read_application,mall.write_application,mall.read_category,mall.read_product,mall.write_product,mall.read_personal',
       },
       authToken: {
         headers: {
@@ -66,8 +59,17 @@ export default {
       const paramOfUrl = window.location.search
       return new URLSearchParams(paramOfUrl)
     },
+    makeParam (baseUrl='', params={'key': 'val'}) {
+      baseUrl += '?'
+      let combinedUrl = Object.entries(params).reduce((url, [key, val]) => {
+        url += `${key}=${val}&`
+        return url
+      }, baseUrl)
+      return combinedUrl.slice(0, combinedUrl.length - 1) // exclude last &
+    },
     get_code() {
-      window.location.href = `https://${this.shopId}.cafe24api.com/api/v2/oauth/authorize?response_type=code&client_id=f31zyAgabCWXPLDAqtLYdD&state=TEMP_CSRF_TOKEN&redirect_uri=https://widget-admin.netlify.app/&scope=mall.read_application,mall.write_application`
+      let url = `https://${this.shopId}.cafe24api.com/api/v2/oauth/authorize`
+      window.location.href = this.makeParam(url, this.authCodeParams)
     },
     get_token({ code }) {
       const url = 'https://tjagksro.cafe24api.com/api/v2/oauth/token'
