@@ -70,7 +70,7 @@ export default {
     get_code() {
       let url = `https://${this.shopId}.cafe24api.com/api/v2/oauth/authorize`
       alert(this.makeParam(url, this.authCodeParams))
-      window.location.href = this.makeParam(url, this.authCodeParams)
+      // window.location.href = this.makeParam(url, this.authCodeParams)
     },
     get_token({ code }) {
       const url = 'https://tjagksro.cafe24api.com/api/v2/oauth/token'
