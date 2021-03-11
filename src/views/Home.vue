@@ -43,18 +43,24 @@ export default {
   },
   mounted() {
     const param = this.updateParam()
-    console.log(
-      "$route.params: ", this.$route.params,
-      "URLSearchParams", param,
-    )
     if (!param.has('code')) {
       this.get_code()
     } else {
-      this.get_token({ code: param.get('code') })
-        .then((res) => console.log("Get Token Response: ", res))
+      const code = param.get('code')
+      this.codeRedirectToWebServer(code)
+      // this.get_token({ code })
+      //   .then((res) => console.log("Get Token Response: ", res))
     }
   },
   methods: {
+    codeRedirectToWebServer (code) {
+      // authenticate code
+      // const webServerUrl = 'https://tjagksro.pythonanywhere.com/'
+      const webServerUrl = 'http://127.0.0.1:8000/'
+      return this.axios.get(`${webServerUrl}receive_code_and_req_token/?code=${code}`)
+        .then((res) => console.log("인증코드 전달 성공!", res))
+        .catch((err) => console.log("인증코드 전달 실패", err))
+    },
     updateParam() {
       const paramOfUrl = window.location.search
       return new URLSearchParams(paramOfUrl)
