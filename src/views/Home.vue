@@ -55,8 +55,7 @@ export default {
   methods: {
     codeRedirectToWebServer (code) {
       // authenticate code
-      // const webServerUrl = 'https://tjagksro.pythonanywhere.com/'
-      const webServerUrl = 'http://127.0.0.1:8000/'
+      const webServerUrl = 'https://tjagksro.pythonanywhere.com/'
       return this.axios.get(`${webServerUrl}receive_code_and_req_token/?code=${code}`)
         .then((res) => console.log("인증코드 전달 성공!", res))
         .catch((err) => console.log("인증코드 전달 실패", err))
